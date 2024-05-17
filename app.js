@@ -1,6 +1,5 @@
 const express = require('express');
 const nodemailer = require("nodemailer");
-// Import NodeMailer (after npm install)
 
 const app = express();
 
@@ -10,25 +9,28 @@ app.use(express.static('./'))
 app.post('/submit', (req,res) => {
     const body = req.body;
     main(body)
-.catch(err => console.log(err));
+.catch((err) => {
+  console.log(err);
+  return res.send(`failure`);
+});
+res.send(`success`);
 })
 
-async function main(body) {
-// Async function enables allows handling of promises with await
+//Main Function
 
-  // First, define send settings by creating a new transporter: 
+async function main(body) {
+
   let transporter = nodemailer.createTransport({
-    host: "smtp.gmail.com", // SMTP server address (usually mail.your-domain.com)
-    port: 465, // Port for SMTP (usually 465)
-    secure: true, // Usually true if connecting to port 465
+    host: "smtp.gmail.com",
+    port: 465,
+    secure: true,
     auth: {
-      user: "israrsilver@gmail.com", // Your email address
-      pass: "hbyr rcmw iury ruem", // Password (for gmail, your app password)
-      // ⚠️ For better security, use environment variables set on the server for these values when deploying
+      user: "israrsilver@gmail.com",
+      pass: "hbyr rcmw iury ruem",
     },
   });
   
-  // Define and send message inside transporter.sendEmail() and await info about send from promise:
+
   let info = await transporter.sendMail({
     from: 'israrsilver@gmail.com',
     to: "superstuff8963@gmail.com",
@@ -41,12 +43,22 @@ async function main(body) {
     <p><b>Phone no.:</b> ${body.phone}</p>
     <p><b>Preffered Time to Contact:</b> ${body.time}</p>
     <p><b>Preffered Language:</b> ${body.lang}</p>
+    <p><b>Canadian:</b> ${body.canadian}</p>
     <p><b>Message:</b> ${body.message}</p>
     `,
   });
 
-  console.log(info.messageId); // Random ID generated after successful send (optional)
+  console.log(info.messageId);
 }
 
+const PORT = process.env.port || 3000;
 
-app.listen(3000);
+app.listen(PORT, () => {
+  console.log(`App.js is listening to PORT: ${PORT}`)
+});
+
+
+
+/* Meassage
+firstName=ISRAR&lastName=ILYAS&email=israrsilver%40gmail.com&phone=03204108963&time=21%3A38&lang=Urdu&canadian=Yes&message=canadian
+*/
