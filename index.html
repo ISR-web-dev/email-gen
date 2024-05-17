@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Email Submission API by Israr_webdev</title>
 </head>
 <body>
     <form action="/submit" method="post">
@@ -13,6 +13,9 @@
         <input required type="number" name="phone" placeholder="phone">
         <input required type="time" name="time" placeholder="Time">
         <input required type="text" name="lang" placeholder="preffered Language">
+        <span>Canadian</span>
+        <input required type="radio" name="canadian" value="Yes"><label for="canadian">Yes</label>
+        <input required type="radio" name="canadian" value="No"><label for="canadian">No</label>
         <textarea name="message" id="" placeholder="message"></textarea>
         <button type="submit">Submit</button>
     </form>
