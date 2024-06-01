@@ -4,7 +4,11 @@ const nodemailer = require("nodemailer");
 const app = express();
 
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static('./'))
+app.use(express.static('./'));
+
+app.get('*', (req,res) => {
+    res.end(`Please Submit a POST request to "/submit"`);
+});
 
 app.post('/submit', (req,res) => {
     const body = req.body;
